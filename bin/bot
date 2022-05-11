@@ -1,4 +1,6 @@
 #!/bin/sh
 
-[ -f .env ] && export $(< .env)
+if [ -f .env ]; then
+    export $(< .env)
+fi
 exec pipenv --python /usr/bin/python3 run src/bot.py

@@ -11,7 +11,3 @@ pymongo = "*"
 python-telegram-bot = "*"
 dnspython = "*"
 
-[dev-packages]
-
-[requires]
-python_version = "3.9"
