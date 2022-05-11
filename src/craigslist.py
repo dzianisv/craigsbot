@@ -1,6 +1,8 @@
 #import get to call a get request on the site
 from requests import get
 from dataclasses import dataclass
+from datetime import datetime
+import time
 import sys
 
 @dataclass
@@ -8,7 +10,7 @@ class Post:
     title: str
     price: float
     link: str
-
+    datetime: datetime
 
 def process_post(post) -> Post:
     _datetime = post.find('time', class_= 'result-date')['datetime']
@@ -16,10 +18,12 @@ def process_post(post) -> Post:
     price = post.a.text.strip()[1:].replace(',', '')
     title = post.find('a', class_='result-title hdrlnk').text
     link = post.find('a', class_='result-title hdrlnk')['href']
-    return Post(title, price, link)
+    datetime_str = post.find('time', class_= 'result-date')['datetime']
+    ad_t = time.strptime(datetime_str, "%Y-%m-%d %H:%M")
+    return Post(title, price, link, ad_t)
 
 
-def crawl(url: str):
+def fetch(url: str):
     #get the first page of the east bay housing prices
     response = get(url) #get rid of those lame-o's that post a housing option without a pic using their filter
 
@@ -31,7 +35,7 @@ def crawl(url: str):
 
     for xml in posts:
         post = process_post(xml)
-        print(post)
+        yield post
 
 if __name__ == "__main__":
-    crawl(sys.argv[1])
+    fetch(sys.argv[1])
