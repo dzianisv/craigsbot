@@ -3,4 +3,4 @@
 if [ -f .env ]; then
     export $(< .env)
 fi
-exec pipenv --python /usr/bin/python3 run python3 src/bot.py
+exec pipenv /usr/bin/python3 run python3 src/bot.py

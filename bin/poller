@@ -3,4 +3,4 @@
 if [ -f .env ]; then
     export $(< .env)
 fi
-while :; do pipenv --python /usr/bin/python3 run python3 src/poller.py; sleep 10m;  done;
+while :; do pipenv run python3 src/poller.py; sleep 10m;  done;
