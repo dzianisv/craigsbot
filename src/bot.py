@@ -5,21 +5,28 @@ from data import db, config
 from datetime import datetime
 
 def start(u, ctx):
-    url = u.message.text.split(' ')[1]
-    logging.info("subscribing %d: %s", u.message.chat_id, u.message.text.split(' '))
+    try:
+        _, url = u.message.text.split(' ')
+        # TODO: validate that a valid craigslist url specified
+    except:
+        u.message.rply_text("Invalid message format, check /help")
+        return
+
+
+    logging.info("subscribing %d: %s", u.message.chat_id, url)
     db.subscribers.insert_one({
         'telegram_chat_id': u.message.chat_id,
         'url': url,
         'latest': datetime.now(),
     })
-    u.message.reply_text('Subscribed')
+    u.message.reply_text(f'Subscribed to {url}')
 
 def list(u, ctx):
     urls = [ doc['url'] for doc in db.subscribers.find({'telegram_chat_id': u.message.chat_id }) ]
     u.message.reply_text(f"Subscribed to {urls}")
 
 def stop(u, ctx):
-    logging.info("unsubscribing %d", u.message.chat_id)
+    logging.info("Unsubscribing %d", u.message.chat_id)
     db.subscribers.delete_many({
         'telegram_chat_id': u.message.chat_id
     })
