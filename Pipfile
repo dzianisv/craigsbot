@@ -6,8 +6,6 @@ name = "pypi"
 [packages]
 requests = "*"
 bs4 = "*"
-telegram = "*"
 pymongo = "*"
 python-telegram-bot = "*"
 dnspython = "*"
-
