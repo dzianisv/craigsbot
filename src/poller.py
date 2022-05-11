@@ -12,7 +12,6 @@ def poll(subscriber):
     url = subscriber["url"]
 
     for post in craigslist.fetch(url):
-        logging.debug("%r-%r", type(post.datetime), type(latest))
         latest = max(post.datetime, latest) 
         if (post.datetime <= subscriber["latest"]):
             break
