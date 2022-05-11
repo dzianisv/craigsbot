@@ -1,24 +1,8 @@
 #!/usr/bin/env python3
-import os
-import binascii
-import time
-import sys
-import telegram
+
 import logging
-import threading
-import json
-from pymongo import MongoClient
-from . import craigslist
-
-class Config(object):
-    def __init__(self):
-        self.mongo_url = os.environ.get("MONGODB_URL", None)
-        self.telegram_token = os.environ.get("TELEGRAM_TOKEN", None)
-
-config = Config()
-client = MongoClient(config.mongo_url)
-db = client.craigslistcrawler
-tg = telegram.Bot(token=config.telegram_token)
+import craigslist
+from data import tg, db
 
 def notify(subscriber, res):
     tg.send_message(chat_id=subscriber['telegram_chat_id'], text="{url} {price} {where}".format(**res))
@@ -28,6 +12,7 @@ def poll(subscriber):
     url = subscriber["url"]
 
     for post in craigslist.fetch(url):
+        logging.debug("%r-%r", type(post.datetime), type(latest))
         latest = max(post.datetime, latest) 
         if (post.datetime <= subscriber["latest"]):
             break

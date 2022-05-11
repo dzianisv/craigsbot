@@ -8,6 +8,8 @@ requests = "*"
 bs4 = "*"
 telegram = "*"
 pymongo = "*"
+python-telegram-bot = "*"
+dnspython = "*"
 
 [dev-packages]
 

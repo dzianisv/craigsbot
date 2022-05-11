@@ -19,7 +19,7 @@ def process_post(post) -> Post:
     title = post.find('a', class_='result-title hdrlnk').text
     link = post.find('a', class_='result-title hdrlnk')['href']
     datetime_str = post.find('time', class_= 'result-date')['datetime']
-    ad_t = time.strptime(datetime_str, "%Y-%m-%d %H:%M")
+    ad_t = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
     return Post(title, price, link, ad_t)
 
 
