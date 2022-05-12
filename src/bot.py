@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import logging
+from urllib.parse import urlparse
 import telegram.ext
 from data import db, config
 from datetime import datetime
@@ -7,7 +8,9 @@ from datetime import datetime
 def start(u, ctx):
     try:
         _, url = u.message.text.split(' ')
-        # TODO: validate that a valid craigslist url specified
+        parsed_url = urlparse(url)
+        if not parsed_url.netloc.endswith("craigslist.org"):
+            raise ValueError("Invalid URL")
     except:
         u.message.rply_text("Invalid message format, check /help")
         return
