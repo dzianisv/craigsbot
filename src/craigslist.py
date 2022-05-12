@@ -15,7 +15,8 @@ class Post:
 def process_post(post) -> Post:
     _datetime = post.find('time', class_= 'result-date')['datetime']
     # [1:] strips  $ char
-    price = post.a.text.strip()[1:].replace(',', '')
+    price_str = post.a.text.strip()[1:].replace(',', '')
+    price = float(price_str) if len(price_str) != 0 else 0.0
     title = post.find('a', class_='result-title hdrlnk').text
     link = post.find('a', class_='result-title hdrlnk')['href']
     datetime_str = post.find('time', class_= 'result-date')['datetime']

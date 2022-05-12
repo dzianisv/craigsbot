@@ -4,8 +4,8 @@ import logging
 import craigslist
 from data import tg, db
 
-def notify(subscriber, res):
-    tg.send_message(chat_id=subscriber['telegram_chat_id'], text="{url} {price} {where}".format(**res))
+def notify(subscriber, post):
+    tg.send_message(chat_id=subscriber['telegram_chat_id'], text=f"${post.price}\n{post.link}")
 
 def poll(subscriber):
     latest = subscriber["latest"]
