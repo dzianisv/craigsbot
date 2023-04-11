@@ -4,8 +4,18 @@ It can be easially self-hosted on Raspberry Pi or other single board computers
 # Installation
 
 ```sh
-apt install -yq python3 pipenv
+apt install -yq python3
+pip3 install pipenv
 pipenv sync
+```
+
+
+# Configuration
+Put the following configuration into `.env` or export the following variables
+
+```env
+MONGODB_URL=
+TELEGRAM_TOKEN=
 ```
 
 # Services
